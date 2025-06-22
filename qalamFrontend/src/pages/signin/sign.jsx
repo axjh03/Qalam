@@ -228,11 +228,13 @@ export default function Sign({ onLoginSuccess }) {
   };
 
   const handleGoogleLogin = () => {
-    window.location.href = 'http://localhost:3000/auth/google';
+    const backendUrl = import.meta.env.VITE_API_URL || 'http://localhost:3000';
+    window.location.href = `${backendUrl}/auth/google`;
   };
 
   const handleGitHubLogin = () => {
-    window.location.href = 'http://localhost:3000/auth/github';
+    const backendUrl = import.meta.env.VITE_API_URL || 'http://localhost:3000';
+    window.location.href = `${backendUrl}/auth/github`;
   };
 
   return (
