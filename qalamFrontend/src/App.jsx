@@ -270,7 +270,7 @@ function App() {
         {isAuthenticated && user && (
           <Navbar user={user} onLogout={handleLogout} onPlusClick={handlePlusClick} />
         )}
-        <main className="pt-24 max-w-6xl mx-auto px-4">
+        <main className="pt-20 sm:pt-24 max-w-6xl mx-auto px-3 sm:px-4">
           <Routes>
             {isAuthenticated ? (
               <>

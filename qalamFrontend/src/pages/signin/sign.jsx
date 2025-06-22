@@ -246,27 +246,27 @@ export default function Sign({ onLoginSuccess }) {
   return (
     <div className="min-h-screen flex flex-col items-center justify-center relative bg-gradient-to-br from-slate-50 to-white">
       {/* Header Section */}
-      <div className="text-center mb-8 px-4">
-        <h1 className="text-6xl md:text-7xl lg:text-8xl font-black bg-gradient-to-r from-purple-600 via-pink-500 to-indigo-600 bg-clip-text text-transparent animate-gradient-x mb-3 leading-none" style={{
+      <div className="text-center mb-6 sm:mb-8 px-4">
+        <h1 className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-black bg-gradient-to-r from-purple-600 via-pink-500 to-indigo-600 bg-clip-text text-transparent animate-gradient-x mb-2 sm:mb-3 leading-none" style={{
           fontFamily: "'Dancing Script', cursive, serif",
           backgroundSize: '200% 200%',
           animation: 'gradientFlow 3s ease-in-out infinite'
         }}>
           Qalam
         </h1>
-        <p className="text-lg md:text-xl font-light text-slate-600 max-w-2xl mx-auto">
+        <p className="text-base sm:text-lg md:text-xl font-light text-slate-600 max-w-2xl mx-auto">
           Place where your writing matters
         </p>
       </div>
 
       {/* Main Content - Wide Screen Layout */}
-      <div className="w-full max-w-5xl px-4">
-        <div className="flex flex-col lg:flex-row items-center justify-center gap-6 lg:gap-12">
+      <div className="w-full max-w-4xl sm:max-w-5xl px-3 sm:px-4">
+        <div className="flex flex-col lg:flex-row items-center justify-center gap-4 sm:gap-6 lg:gap-12">
           
           {/* Left Side - Social Buttons */}
-          <div className="flex flex-col space-y-3 w-full max-w-sm lg:max-w-xs">
+          <div className="flex flex-col space-y-2 sm:space-y-3 w-full max-w-sm lg:max-w-xs">
             <button
-              class="rounded-md flex items-center justify-center border border-slate-300 py-2.5 px-5 text-center text-sm transition-all shadow-sm hover:shadow-lg text-slate-600 hover:text-white hover:bg-slate-800 hover:border-slate-800 focus:text-white focus:bg-slate-800 focus:border-slate-800 active:border-slate-800 active:text-white active:bg-slate-800 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+              class="rounded-md flex items-center justify-center border border-slate-300 py-2 sm:py-2.5 px-4 sm:px-5 text-center text-sm transition-all shadow-sm hover:shadow-lg text-slate-600 hover:text-white hover:bg-slate-800 hover:border-slate-800 focus:text-white focus:bg-slate-800 focus:border-slate-800 active:border-slate-800 active:text-white active:bg-slate-800 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
               type="button"
               onClick={handleGoogleLogin}
             >
@@ -279,7 +279,7 @@ export default function Sign({ onLoginSuccess }) {
             </button>
             
             <button
-              class="rounded-md flex items-center justify-center border border-slate-300 py-2.5 px-5 text-center text-sm transition-all shadow-sm hover:shadow-lg text-slate-600 hover:text-white hover:bg-slate-800 hover:border-slate-800 focus:text-white focus:bg-slate-800 focus:border-slate-800 active:border-slate-800 active:text-white active:bg-slate-800 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+              class="rounded-md flex items-center justify-center border border-slate-300 py-2 sm:py-2.5 px-4 sm:px-5 text-center text-sm transition-all shadow-sm hover:shadow-lg text-slate-600 hover:text-white hover:bg-slate-800 hover:border-slate-800 focus:text-white focus:bg-slate-800 focus:border-slate-800 active:border-slate-800 active:text-white active:bg-slate-800 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
               type="button"
               onClick={handleGitHubLogin}
             >
@@ -298,12 +298,12 @@ export default function Sign({ onLoginSuccess }) {
           </div>
 
           {/* Right Side - Form */}
-          <div className="flex flex-col space-y-3 w-full max-w-sm lg:max-w-xs">
+          <div className="flex flex-col space-y-2 sm:space-y-3 w-full max-w-sm lg:max-w-xs">
             {/* Profile Picture - Top of Form (only in sign up mode) */}
             {isSignUp && (
-              <div className="text-center mb-3">
+              <div className="text-center mb-2 sm:mb-3">
                 <div className="relative inline-block">
-                  <div className="w-20 h-20 rounded-full bg-slate-200 flex items-center justify-center overflow-hidden border-4 border-slate-300 shadow-lg">
+                  <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-slate-200 flex items-center justify-center overflow-hidden border-4 border-slate-300 shadow-lg">
                     {selectedImage ? (
                       <img 
                         src={selectedImage} 
@@ -311,7 +311,7 @@ export default function Sign({ onLoginSuccess }) {
                         className="w-full h-full object-cover"
                       />
                     ) : (
-                      <svg className="w-10 h-10 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <svg className="w-8 h-8 sm:w-10 sm:h-10 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                       </svg>
                     )}
@@ -326,9 +326,9 @@ export default function Sign({ onLoginSuccess }) {
                   />
                   <label
                     htmlFor="image-upload"
-                    className="absolute -bottom-1 -right-1 bg-slate-800 text-white rounded-full p-1.5 cursor-pointer hover:bg-slate-700 transition-colors shadow-lg"
+                    className="absolute -bottom-1 -right-1 bg-slate-800 text-white rounded-full p-1 sm:p-1.5 cursor-pointer hover:bg-slate-700 transition-colors shadow-lg"
                   >
-                    <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className="w-2.5 h-2.5 sm:w-3 sm:h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
                     </svg>
                   </label>

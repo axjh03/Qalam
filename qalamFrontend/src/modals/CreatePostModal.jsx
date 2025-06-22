@@ -150,87 +150,87 @@ export default function CreatePostModal({ isOpen, onClose, onPublish, user }) {
 
   return (
     <div className="fixed inset-0 bg-black/30 backdrop-blur-sm flex items-center justify-center z-[10001]">
-      <div className="bg-white rounded-lg w-full max-w-4xl h-[90vh] flex flex-col">
+      <div className="bg-white rounded-lg w-full max-w-4xl h-[85vh] sm:h-[90vh] flex flex-col mx-3 sm:mx-0">
         {/* Header */}
-        <div className="flex items-center justify-between p-6 border-b border-gray-200">
-          <h2 className="text-xl font-semibold text-gray-800">Create Post</h2>
+        <div className="flex items-center justify-between p-4 sm:p-6 border-b border-gray-200">
+          <h2 className="text-lg sm:text-xl font-semibold text-gray-800">Create Post</h2>
           <button
             onClick={onClose}
             className="text-gray-500 hover:text-gray-700"
           >
-            <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="h-5 w-5 sm:h-6 sm:w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
             </svg>
           </button>
         </div>
 
         {/* Content */}
-        <div className="flex-1 p-6 overflow-y-auto">
+        <div className="flex-1 p-4 sm:p-6 overflow-y-auto">
           {/* Title Input */}
-          <div className="mb-6">
+          <div className="mb-4 sm:mb-6">
             <input
               type="text"
               placeholder="Title (3x size)"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
-              className="w-full text-3xl font-bold border-none outline-none placeholder-gray-400 resize-none"
+              className="w-full text-2xl sm:text-3xl font-bold border-none outline-none placeholder-gray-400 resize-none"
               maxLength={100}
             />
           </div>
 
           {/* Subtitle Input */}
-          <div className="mb-6">
+          <div className="mb-4 sm:mb-6">
             <input
               type="text"
               placeholder="Subtitle (2x size)"
               value={subtitle}
               onChange={(e) => setSubtitle(e.target.value)}
-              className="w-full text-2xl font-medium border-none outline-none placeholder-gray-400 resize-none"
+              className="w-full text-xl sm:text-2xl font-medium border-none outline-none placeholder-gray-400 resize-none"
               maxLength={200}
             />
           </div>
 
           {/* Formatting Toolbar */}
-          <div className="mb-4 flex items-center gap-2 p-3 bg-gray-50 rounded-lg">
+          <div className="mb-3 sm:mb-4 flex items-center gap-1 sm:gap-2 p-2 sm:p-3 bg-gray-50 rounded-lg">
             <button
               onClick={() => applyFormatting('bold')}
-              className="px-3 py-1 rounded bg-white text-gray-700 border hover:bg-gray-100"
+              className="px-2 sm:px-3 py-1 rounded bg-white text-gray-700 border hover:bg-gray-100 text-sm"
               title="Bold (Ctrl+B)"
             >
               <strong>B</strong>
             </button>
             <button
               onClick={() => applyFormatting('italic')}
-              className="px-3 py-1 rounded bg-white text-gray-700 border hover:bg-gray-100"
+              className="px-2 sm:px-3 py-1 rounded bg-white text-gray-700 border hover:bg-gray-100 text-sm"
               title="Italic (Ctrl+I)"
             >
               <em>I</em>
             </button>
             <button
               onClick={addNewline}
-              className="px-3 py-1 rounded bg-white text-gray-700 border hover:bg-gray-100"
+              className="px-2 sm:px-3 py-1 rounded bg-white text-gray-700 border hover:bg-gray-100 text-sm"
               title="New Line"
             >
               ↵ New Line
             </button>
-            <div className="text-xs text-gray-500 ml-4">
+            <div className="text-xs text-gray-500 ml-2 sm:ml-4 hidden sm:block">
               Select text and click B/I to format, or click New Line to add line breaks
             </div>
           </div>
 
           {/* Content Input */}
-          <div className="mb-6">
+          <div className="mb-4 sm:mb-6">
             <textarea
               ref={textareaRef}
               placeholder="Write your content here... (1x size)&#10;Select text and use the formatting buttons above"
               value={content}
               onChange={(e) => setContent(e.target.value)}
-              className="w-full text-lg border border-gray-200 rounded-lg p-4 outline-none focus:border-blue-500 resize-none min-h-[300px] font-mono"
+              className="w-full text-base sm:text-lg border border-gray-200 rounded-lg p-3 sm:p-4 outline-none focus:border-blue-500 resize-none min-h-[250px] sm:min-h-[300px] font-mono"
             />
           </div>
 
           {/* Image Upload */}
-          <div className="mb-6">
+          <div className="mb-4 sm:mb-6">
             <input
               ref={fileInputRef}
               type="file"
@@ -242,23 +242,23 @@ export default function CreatePostModal({ isOpen, onClose, onPublish, user }) {
             {!selectedImage ? (
               <button
                 onClick={() => fileInputRef.current?.click()}
-                className="w-full p-4 border-2 border-dashed border-gray-300 rounded-lg hover:border-gray-400 transition-colors"
+                className="w-full p-3 sm:p-4 border-2 border-dashed border-gray-300 rounded-lg hover:border-gray-400 transition-colors"
               >
                 <div className="text-center">
-                  <svg className="mx-auto h-12 w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="mx-auto h-8 w-8 sm:h-12 sm:w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
                   </svg>
-                  <p className="mt-2 text-sm text-gray-600">Click to upload an image</p>
+                  <p className="mt-2 text-xs sm:text-sm text-gray-600">Click to upload an image</p>
                 </div>
               </button>
             ) : (
-              <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
-                <span className="text-sm text-gray-700">{imageName}</span>
+              <div className="flex items-center justify-between p-2 sm:p-3 bg-gray-50 rounded-lg">
+                <span className="text-xs sm:text-sm text-gray-700">{imageName}</span>
                 <button
                   onClick={removeImage}
                   className="text-red-500 hover:text-red-700"
                 >
-                  <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="h-4 w-4 sm:h-5 sm:w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                   </svg>
                 </button>
@@ -268,10 +268,10 @@ export default function CreatePostModal({ isOpen, onClose, onPublish, user }) {
         </div>
 
         {/* Footer */}
-        <div className="flex items-center justify-between p-6 border-t border-gray-200">
+        <div className="flex items-center justify-between p-4 sm:p-6 border-t border-gray-200">
           <button
             onClick={handleDiscard}
-            className="px-6 py-2 text-gray-600 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
+            className="px-4 sm:px-6 py-2 text-gray-600 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors text-sm"
             disabled={isUploading}
           >
             Discard
@@ -279,7 +279,7 @@ export default function CreatePostModal({ isOpen, onClose, onPublish, user }) {
           <button
             onClick={handlePublish}
             disabled={isUploading}
-            className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            className="px-4 sm:px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-sm"
           >
             {isUploading ? 'Publishing...' : 'Publish'}
           </button>

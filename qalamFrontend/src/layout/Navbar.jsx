@@ -201,12 +201,12 @@ export default function Navbar({ user, onLogout, onPlusClick }) {
   };
 
   return (
-    <div className="fixed top-0 left-0 right-0 w-full p-4 z-[10000]">
-      <nav className="max-w-6xl mx-auto flex items-center justify-between px-6 py-3 bg-white/30 backdrop-blur-lg border border-white/20 rounded-3xl shadow-2xl shadow-black/10">
+    <div className="fixed top-0 left-0 right-0 w-full p-2 sm:p-4 z-[10000]">
+      <nav className="max-w-6xl mx-auto flex items-center justify-between px-3 sm:px-6 py-2 sm:py-3 bg-white/30 backdrop-blur-lg border border-white/20 rounded-2xl sm:rounded-3xl shadow-2xl shadow-black/10">
       {/* Left side - Qalam */}
       <div className="flex-1">
         <span 
-          className="text-2xl font-black bg-gradient-to-r from-purple-600 via-pink-500 to-indigo-600 bg-clip-text text-transparent cursor-pointer" 
+          className="text-xl sm:text-2xl font-black bg-gradient-to-r from-purple-600 via-pink-500 to-indigo-600 bg-clip-text text-transparent cursor-pointer" 
           onClick={handleHomeClick}
           style={{
             fontFamily: "'Dancing Script', cursive, serif",
@@ -219,17 +219,17 @@ export default function Navbar({ user, onLogout, onPlusClick }) {
       </div>
 
       {/* Middle - Icons */}
-      <div className="flex items-center gap-8">
+      <div className="flex items-center gap-4 sm:gap-8">
 
 
         <button 
           onClick={handlePeopleClick}
-          className="h-12 w-12 flex items-center justify-center hover:bg-gray-100 rounded-xl transition-all duration-300 hover:scale-105"
+          className="h-10 w-10 sm:h-12 sm:w-12 flex items-center justify-center hover:bg-gray-100 rounded-xl transition-all duration-300 hover:scale-105"
         >
           <img 
             src="https://cdn-icons-png.flaticon.com/512/6911/6911758.png" 
             alt="Home" 
-            className="h-8 w-8"
+            className="h-6 w-6 sm:h-8 sm:w-8"
           />
         </button>
 
@@ -238,31 +238,31 @@ export default function Navbar({ user, onLogout, onPlusClick }) {
         {/* Book Icon */}
         <button
           onClick={handleMyPostsClick}
-          className={`h-12 w-12 flex items-center justify-center hover:bg-gray-100 rounded-xl transition-all duration-300 hover:scale-105 ${
+          className={`h-10 w-10 sm:h-12 sm:w-12 flex items-center justify-center hover:bg-gray-100 rounded-xl transition-all duration-300 hover:scale-105 ${
             location.pathname === '/my-posts' ? 'bg-blue-50' : ''
           }`}
         >
           <img 
             src="https://cdn-icons-png.flaticon.com/512/864/864685.png" 
             alt="My Posts" 
-            className="h-8 w-8"
+            className="h-6 w-6 sm:h-8 sm:w-8"
           />
         </button>
         <button
           onClick={handleHomeClick}
-          className="h-12 w-12 flex items-center justify-center hover:bg-gray-100 rounded-xl transition-all duration-300 hover:scale-105">
+          className="h-10 w-10 sm:h-12 sm:w-12 flex items-center justify-center hover:bg-gray-100 rounded-xl transition-all duration-300 hover:scale-105">
           <img 
             src="https://cdn-icons-png.flaticon.com/512/1946/1946488.png" 
             alt="Friends" 
-            className="h-6 w-6"
+            className="h-5 w-5 sm:h-6 sm:w-6"
           />
         </button>
         <div className="relative">
-          <button className="h-12 w-12 flex items-center justify-center hover:bg-gray-100 rounded-xl transition-all duration-300 hover:scale-105">
+          <button className="h-10 w-10 sm:h-12 sm:w-12 flex items-center justify-center hover:bg-gray-100 rounded-xl transition-all duration-300 hover:scale-105">
             <img 
               src="https://cdn-icons-png.flaticon.com/512/1827/1827504.png" 
               alt="Bell" 
-              className="h-6 w-6"
+              className="h-5 w-5 sm:h-6 sm:w-6"
             />
           </button>
           {/* Notification count would go here */}
@@ -271,54 +271,54 @@ export default function Navbar({ user, onLogout, onPlusClick }) {
         {/* Plus Icon */}
         <button
           onClick={onPlusClick}
-          className="h-12 w-12 flex items-center justify-center hover:bg-gray-100 rounded-xl transition-all duration-300 hover:scale-105"
+          className="h-10 w-10 sm:h-12 sm:w-12 flex items-center justify-center hover:bg-gray-100 rounded-xl transition-all duration-300 hover:scale-105"
         >
-          <svg className="h-6 w-6 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg className="h-5 w-5 sm:h-6 sm:w-6 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
           </svg>
         </button>
       </div>
 
       {/* Right side - Profile */}
-      <div className="flex-1 flex items-center justify-end gap-4">
-        <div className="flex items-center gap-3">
+      <div className="flex-1 flex items-center justify-end gap-2 sm:gap-4">
+        <div className="flex items-center gap-2 sm:gap-3">
           {profilePictureUrl && (
             <img
               src={profilePictureUrl}
               alt="Profile" 
-              className="h-10 w-10 rounded-full object-cover shadow-lg"
+              className="h-8 w-8 sm:h-10 sm:w-10 rounded-full object-cover shadow-lg"
             />
           )}
           <div 
-            className={`h-10 w-10 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 flex items-center justify-center shadow-lg ${
+            className={`h-8 w-8 sm:h-10 sm:w-10 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 flex items-center justify-center shadow-lg ${
               !profilePictureUrl ? 'flex' : 'hidden'
             }`}
           >
-            <span className="text-sm font-bold text-white">
+            <span className="text-xs sm:text-sm font-bold text-white">
               {user?.username?.charAt(0).toUpperCase() || 'U'}
             </span>
           </div>
-          <span className="text-sm font-semibold text-gray-800">{user?.username || 'User'}</span>
+          <span className="text-xs sm:text-sm font-semibold text-gray-800 hidden sm:block">{user?.username || 'User'}</span>
         </div>
         
         {/* Settings Dropdown */}
         <div className="relative">
           <button 
             onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-            className="h-12 w-12 flex items-center justify-center hover:bg-gray-100 rounded-xl transition-all duration-300 hover:scale-105"
+            className="h-10 w-10 sm:h-12 sm:w-12 flex items-center justify-center hover:bg-gray-100 rounded-xl transition-all duration-300 hover:scale-105"
           >
             <img 
               src="https://www.iconpacks.net/icons/2/free-settings-icon-3110-thumb.png" 
               alt="Settings" 
-              className="h-7 w-7"
+              className="h-6 w-6 sm:h-7 sm:w-7"
             />
           </button>
 
           {/* Dropdown Menu */}
           {isDropdownOpen && (
-            <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200 py-2 z-[9999]">
-              <div className="px-4 py-2 border-b border-gray-100">
-                <p className="text-sm font-medium text-gray-800">{user?.username}</p>
+            <div className="absolute right-0 mt-2 w-40 sm:w-48 bg-white rounded-lg shadow-lg border border-gray-200 py-2 z-[9999]">
+              <div className="px-3 sm:px-4 py-2 border-b border-gray-100">
+                <p className="text-xs sm:text-sm font-medium text-gray-800">{user?.username}</p>
                 <p className="text-xs text-gray-500">Signed in</p>
               </div>
               
@@ -328,11 +328,11 @@ export default function Navbar({ user, onLogout, onPlusClick }) {
                     if (user?.username) navigate(`/users/${user.username}`);
                     setIsDropdownOpen(false);
                   }}
-                  className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                  className="block w-full text-left px-3 sm:px-4 py-2 text-xs sm:text-sm text-gray-700 hover:bg-gray-100"
                 >
                   My Profile
                 </button>
-                <label className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer">
+                <label className="block px-3 sm:px-4 py-2 text-xs sm:text-sm text-gray-700 hover:bg-gray-100 cursor-pointer">
                   Change Profile Picture
                   <input
                     type="file"
@@ -345,7 +345,7 @@ export default function Navbar({ user, onLogout, onPlusClick }) {
                 <div className="border-t border-gray-100 my-1"></div>
                 <button
                   onClick={() => setShowDeleteConfirm(true)}
-                  className="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100"
+                  className="block w-full text-left px-3 sm:px-4 py-2 text-xs sm:text-sm text-red-600 hover:bg-gray-100"
                 >
                   Delete Account
                 </button>
@@ -356,7 +356,7 @@ export default function Navbar({ user, onLogout, onPlusClick }) {
                     navigate('/signin');
                     setIsDropdownOpen(false);
                   }}
-                  className="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100"
+                  className="block w-full text-left px-3 sm:px-4 py-2 text-xs sm:text-sm text-red-600 hover:bg-gray-100"
                 >
                   Sign out
                 </button>
@@ -370,21 +370,21 @@ export default function Navbar({ user, onLogout, onPlusClick }) {
       {/* Delete Confirmation Modal */}
       {showDeleteConfirm && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white rounded-lg p-6 max-w-md w-full mx-4">
-            <h3 className="text-lg font-semibold text-gray-900 mb-4">Delete Account</h3>
-            <p className="text-gray-600 mb-6">
+          <div className="bg-white rounded-lg p-4 sm:p-6 max-w-md w-full mx-4">
+            <h3 className="text-base sm:text-lg font-semibold text-gray-900 mb-3 sm:mb-4">Delete Account</h3>
+            <p className="text-sm sm:text-base text-gray-600 mb-4 sm:mb-6">
               Are you sure you want to delete your account? This action cannot be undone.
             </p>
-            <div className="flex justify-end space-x-3">
+            <div className="flex justify-end space-x-2 sm:space-x-3">
               <button
                 onClick={() => setShowDeleteConfirm(false)}
-                className="px-4 py-2 text-gray-600 border border-gray-300 rounded-md hover:bg-gray-50"
+                className="px-3 sm:px-4 py-2 text-sm text-gray-600 border border-gray-300 rounded-md hover:bg-gray-50"
               >
                 Cancel
               </button>
               <button
                 onClick={handleDeleteAccount}
-                className="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700"
+                className="px-3 sm:px-4 py-2 text-sm bg-red-600 text-white rounded-md hover:bg-red-700"
               >
                 Delete Account
               </button>
