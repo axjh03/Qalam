@@ -1,0 +1,9 @@
+user able to create accounts on dynamoDB
+user can log in with dynamoDB
+
+Link with Front End, for login success and user account creation
+
+implement passport-google and passport-github 
+link and test from front-End
+
+Create User, Schema and How data will be structured..

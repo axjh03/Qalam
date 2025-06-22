@@ -1,0 +1,58 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: 'DynamoDB table for QalamLink application'
+
+Parameters:
+  TableName:
+    Type: String
+    Default: 'Qalam'
+    Description: 'Name of the DynamoDB table'
+
+Resources:
+  QalamTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: !Ref TableName
+      BillingMode: PAY_PER_REQUEST
+      AttributeDefinitions:
+        - AttributeName: PK
+          AttributeType: S
+        - AttributeName: GSI1PK
+          AttributeType: S
+        - AttributeName: GSI1SK
+          AttributeType: S
+        - AttributeName: GSI2PK
+          AttributeType: S
+        - AttributeName: GSI2SK
+          AttributeType: S
+      KeySchema:
+        - AttributeName: PK
+          KeyType: HASH
+      GlobalSecondaryIndexes:
+        - IndexName: GSI1
+          KeySchema:
+            - AttributeName: GSI1PK
+              KeyType: HASH
+            - AttributeName: GSI1SK
+              KeyType: RANGE
+          Projection:
+            ProjectionType: ALL
+        - IndexName: GSI2
+          KeySchema:
+            - AttributeName: GSI2PK
+              KeyType: HASH
+            - AttributeName: GSI2SK
+              KeyType: RANGE
+          Projection:
+            ProjectionType: ALL
+
+Outputs:
+  TableName:
+    Description: 'Name of the DynamoDB table'
+    Value: !Ref QalamTable
+    Export:
+      Name: !Sub '${AWS::StackName}-TableName'
+  TableArn:
+    Description: 'ARN of the DynamoDB table'
+    Value: !GetAtt QalamTable.Arn
+    Export:
+      Name: !Sub '${AWS::StackName}-TableArn' 
