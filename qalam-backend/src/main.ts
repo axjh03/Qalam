@@ -7,8 +7,14 @@ async function bootstrap() {
   
   // Enable CORS for frontend communication
   app.enableCors({
-    origin: 'http://localhost:5173', // Vite default port
+    origin: [
+      'http://localhost:5173', // Vite default port for development
+      'https://rad-truffle-6266c3.netlify.app', // Your Netlify domain
+      'https://*.netlify.app', // Any Netlify subdomain
+    ],
     credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'Accept'],
   });
 
   // Swagger Documentation Setup
@@ -24,7 +30,7 @@ async function bootstrap() {
     .build();
   
   const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('swagger', app, document);
+  SwaggerModule.setup('api', app, document);
   
   await app.listen(process.env.PORT ?? 3000);
   

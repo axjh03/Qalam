@@ -539,9 +539,10 @@ export class AppController {
     const loginResult = await this.authService.login(req.user);
     
     // Redirect to frontend with JWT token as URL parameter
-    const frontendUrl = `http://localhost:5173?token=${loginResult.access_token}&user=${encodeURIComponent(JSON.stringify(loginResult.user))}`;
+    const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:5173';
+    const redirectUrl = `${frontendUrl}?token=${loginResult.access_token}&user=${encodeURIComponent(JSON.stringify(loginResult.user))}`;
     
-    res.redirect(frontendUrl);
+    res.redirect(redirectUrl);
   }
 
   @Get('auth/google')
@@ -564,9 +565,10 @@ export class AppController {
     const loginResult = await this.authService.login(req.user);
     
     // Redirect to frontend with JWT token as URL parameter
-    const frontendUrl = `http://localhost:5173?token=${loginResult.access_token}&user=${encodeURIComponent(JSON.stringify(loginResult.user))}`;
+    const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:5173';
+    const redirectUrl = `${frontendUrl}?token=${loginResult.access_token}&user=${encodeURIComponent(JSON.stringify(loginResult.user))}`;
     
-    res.redirect(frontendUrl);
+    res.redirect(redirectUrl);
   }
 
   @Get('test-oauth')
