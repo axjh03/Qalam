@@ -437,6 +437,23 @@ export class DynamoDBService {
       throw new Error('Post not found');
     }
 
+    // Get all users who commented on this post
+    const commentAuthors = new Set<string>();
+    if (postToDelete.comments && postToDelete.comments.length > 0) {
+      postToDelete.comments.forEach(comment => {
+        commentAuthors.add(comment.authorId);
+      });
+    }
+
+    // Get all users who liked this post
+    const likeAuthors = new Set<string>();
+    if (postToDelete.likedBy && postToDelete.likedBy.length > 0) {
+      postToDelete.likedBy.forEach(userId => {
+        likeAuthors.add(userId);
+      });
+    }
+
+    // Delete the post first
     const command = new DeleteCommand({
       TableName: this.tableName,
       Key: {
@@ -447,6 +464,27 @@ export class DynamoDBService {
     try {
       await this.dynamoClient.send(command);
       console.log('Post deleted successfully:', postId);
+
+      // Now decrement comment counts for all users who commented
+      for (const authorId of commentAuthors) {
+        try {
+          await this.decrementUserCommentsCount(authorId);
+          console.log(`Decremented comment count for user ${authorId} after post deletion`);
+        } catch (error) {
+          console.error(`Error decrementing comment count for user ${authorId}:`, error);
+        }
+      }
+
+      // Now decrement like counts for all users who liked the post
+      for (const userId of likeAuthors) {
+        try {
+          await this.decrementUserLikesCount(userId);
+          console.log(`Decremented like count for user ${userId} after post deletion`);
+        } catch (error) {
+          console.error(`Error decrementing like count for user ${userId}:`, error);
+        }
+      }
+
       return postToDelete;
     } catch (error) {
       console.error('Error deleting post:', error);
