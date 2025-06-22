@@ -1,10 +1,11 @@
 import { ApolloClient, InMemoryCache, createHttpLink, from } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
 import { onError } from '@apollo/client/link/error';
+import { API_ENDPOINTS } from '../config/api.js';
 
 // Create HTTP link
 const httpLink = createHttpLink({
-  uri: 'http://localhost:3000/graphql', // GraphQL endpoint
+  uri: API_ENDPOINTS.GRAPHQL, // GraphQL endpoint
 });
 
 // Auth link to add JWT token to requests

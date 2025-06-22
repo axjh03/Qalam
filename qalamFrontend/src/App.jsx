@@ -7,6 +7,7 @@ import Home from './pages/Home'
 import MyPosts from './pages/MyPosts'
 import People from './pages/People'
 import UserProfile from './pages/UserProfile'
+import { API_ENDPOINTS } from './config/api.js'
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
@@ -21,7 +22,7 @@ function App() {
   // Function to check backend health
   const checkBackendHealth = async () => {
     try {
-      const response = await fetch('http://localhost:3000/health', {
+      const response = await fetch(API_ENDPOINTS.HEALTH, {
         method: 'GET',
         signal: AbortSignal.timeout(3000), // 3 second timeout
       });
@@ -183,7 +184,7 @@ function App() {
     console.log('🎉 Publishing post...', postData);
     
     try {
-      const response = await fetch('http://localhost:3000/posts', {
+      const response = await fetch(API_ENDPOINTS.POSTS, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -210,92 +211,55 @@ function App() {
     }
   };
 
+  // Loading screen
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-white flex flex-col items-center justify-center">
+      <div className="min-h-screen bg-gradient-to-br from-purple-50 via-pink-50 to-indigo-50 flex items-center justify-center">
         <div className="text-center">
-          <h1 className="text-6xl md:text-8xl font-black bg-gradient-to-r from-purple-600 via-pink-500 to-indigo-600 bg-clip-text text-transparent mb-8" style={{
-            fontFamily: "'Dancing Script', cursive, serif",
-            backgroundSize: '200% 200%',
-            animation: 'gradientFlow 3s ease-in-out infinite'
-          }}>
-            Qalam
-          </h1>
+          <div className="mb-8">
+            <h1 className="text-4xl font-black bg-gradient-to-r from-purple-600 via-pink-500 to-indigo-600 bg-clip-text text-transparent mb-4"
+                style={{
+                  fontFamily: "'Dancing Script', cursive, serif",
+                  backgroundSize: '200% 200%',
+                  animation: 'gradientFlow 3s ease-in-out infinite'
+                }}>
+              Qalam
+            </h1>
+            <p className="text-gray-600 text-lg">Loading your social experience...</p>
+          </div>
           
-          <div className="w-64 md:w-80 bg-slate-200 rounded-full h-2 mb-4">
+          {/* Progress bar */}
+          <div className="w-64 bg-gray-200 rounded-full h-2 mb-4">
             <div 
-              className="bg-gradient-to-r from-purple-600 via-pink-500 to-indigo-600 h-2 rounded-full transition-all duration-300 ease-out"
+              className="bg-gradient-to-r from-purple-500 to-pink-500 h-2 rounded-full transition-all duration-300 ease-out"
               style={{ width: `${progress}%` }}
             ></div>
           </div>
           
-          <p className="text-slate-600 text-sm">Loading your writing journey...</p>
-        </div>
-
-        {/* Backend Status Modal */}
-        {isBackendDown && (
-          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-            <div className="bg-white rounded-lg p-8 max-w-md mx-4 text-center shadow-xl">
-              <div className="mb-6">
-                {serverAwakened ? (
-                  <>
-                    <div className="w-16 h-16 mx-auto mb-4 bg-green-500 rounded-full flex items-center justify-center">
-                      <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                      </svg>
-                    </div>
-                    <h3 className="text-xl font-semibold text-green-600 mb-2">
-                      Server Awakened!
-                    </h3>
-                    <p className="text-gray-600 text-sm">
-                      The backend is now ready. Continuing to load...
-                    </p>
-                  </>
-                ) : (
-                  <>
-                    <div className="w-16 h-16 mx-auto mb-4 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
-                    <h3 className="text-xl font-semibold text-gray-800 mb-2">
-                      Waiting for Backend
-                    </h3>
-                    <p className="text-gray-600 text-sm">
-                      The server is starting up... This usually takes about 2-3 minutes.
-                    </p>
-                  </>
-                )}
-              </div>
-              
-              <div className="space-y-2">
-                <div className="flex justify-between text-sm">
-                  <span className="text-gray-500">Attempts:</span>
-                  <span className="font-medium">{backendCheckAttempts}/30</span>
-                </div>
-                <div className="flex justify-between text-sm">
-                  <span className="text-gray-500">Status:</span>
-                  <span className={`font-medium ${serverAwakened ? 'text-green-500' : 'text-orange-500'}`}>
-                    {serverAwakened ? 'Connected!' : 'Connecting...'}
-                  </span>
-                </div>
-              </div>
-              
-              <div className="mt-6 text-xs text-gray-400">
-                {serverAwakened 
-                  ? 'The app will continue loading shortly...'
-                  : 'The app will continue loading once the server is ready.'
-                }
-              </div>
+          {/* Status messages */}
+          {isBackendDown && (
+            <div className="text-sm text-gray-500">
+              <p>Waiting for Backend</p>
+              <p>The server is starting up... This usually takes about 2-3 minutes.</p>
+              <p className="mt-2">
+                <span className="font-semibold">Attempts:</span> {backendCheckAttempts}/30
+              </p>
+              <p>
+                <span className="font-semibold">Status:</span> Connecting...
+              </p>
             </div>
-          </div>
-        )}
+          )}
+          
+          {serverAwakened && (
+            <div className="text-sm text-green-600 font-semibold">
+              🎉 Server awakened! Loading your app...
+            </div>
+          )}
+        </div>
       </div>
     );
   }
 
-  // Show login screen if not authenticated
-  if (!isAuthenticated) {
-    return <Sign onLoginSuccess={handleLoginSuccess} />;
-  }
-
-  // Show main app with routing if authenticated
   return (
     <Router>
       <div className="bg-gray-50 min-h-screen">
