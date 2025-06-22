@@ -4,6 +4,7 @@ import React, { useState, useEffect, memo } from "react"
 import { useNavigate } from "react-router-dom"
 import CommentCard from '../CommentCard/CommentCard'
 import LoadMore from "../../ui/LoadMore/LoadMore"
+import { getBackendUrl } from '../../utils/api.js'
 
 const ActualPostCard = memo(({ post, onDelete, refreshUserData }) => {
   const [isLiked, setIsLiked] = useState(false)
@@ -24,7 +25,8 @@ const ActualPostCard = memo(({ post, onDelete, refreshUserData }) => {
     if (post?.mediaUrl && post.mediaUrl.startsWith('posts/')) {
       const fetchSignedUrl = async () => {
         try {
-          const response = await fetch(`http://localhost:3000/s3-url/${post.mediaUrl}`);
+          const backendUrl = getBackendUrl();
+          const response = await fetch(`${backendUrl}/s3-url/${post.mediaUrl}`);
           if (response.ok) {
             const data = await response.json();
             setImageUrl(data.url);
@@ -47,7 +49,8 @@ const ActualPostCard = memo(({ post, onDelete, refreshUserData }) => {
     const checkLikeStatus = async () => {
       if (!post?.postId) return;
       try {
-        const response = await fetch(`http://localhost:3000/posts/${post.postId}/like-status`, {
+        const backendUrl = getBackendUrl();
+        const response = await fetch(`${backendUrl}/posts/${post.postId}/like-status`, {
           headers: { 'Authorization': `Bearer ${localStorage.getItem('jwt_token')}` }
         });
         if (response.ok) {
@@ -68,7 +71,8 @@ const ActualPostCard = memo(({ post, onDelete, refreshUserData }) => {
 
     const method = isLiked ? 'DELETE' : 'POST';
     try {
-      const response = await fetch(`http://localhost:3000/posts/${post.postId}/like`, {
+      const backendUrl = getBackendUrl();
+      const response = await fetch(`${backendUrl}/posts/${post.postId}/like`, {
         method,
         headers: { 'Authorization': `Bearer ${localStorage.getItem('jwt_token')}` },
       });
@@ -172,7 +176,8 @@ const ActualPostCard = memo(({ post, onDelete, refreshUserData }) => {
     
     setIsLoading(true);
     try {
-      const response = await fetch(`http://localhost:3000/posts/${post.postId}/comments`, {
+      const backendUrl = getBackendUrl();
+      const response = await fetch(`${backendUrl}/posts/${post.postId}/comments`, {
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('jwt_token')}`,
         },
@@ -198,7 +203,8 @@ const ActualPostCard = memo(({ post, onDelete, refreshUserData }) => {
 
     setIsSubmitting(true);
     try {
-      const response = await fetch(`http://localhost:3000/posts/${post.postId}/comments`, {
+      const backendUrl = getBackendUrl();
+      const response = await fetch(`${backendUrl}/posts/${post.postId}/comments`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -230,7 +236,8 @@ const ActualPostCard = memo(({ post, onDelete, refreshUserData }) => {
     if (!post?.postId) return;
 
     try {
-      const response = await fetch(`http://localhost:3000/posts/${post.postId}/comments/${commentId}`, {
+      const backendUrl = getBackendUrl();
+      const response = await fetch(`${backendUrl}/posts/${post.postId}/comments/${commentId}`, {
         method: 'DELETE',
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('jwt_token')}`,
