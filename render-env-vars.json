@@ -1,0 +1,80 @@
+{
+  "environment_variables": {
+    "AWS_ACCESS_KEY_ID": "your_aws_access_key_id",
+    "AWS_DYNAMODB_TABLE": "your-dynamodb-table-name",
+    "AWS_REGION": "us-east-1",
+    "AWS_S3_BUCKET": "your-s3-bucket-name",
+    "AWS_SECRET_ACCESS_KEY": "your_aws_secret_access_key",
+    "BACKEND_URL": "https://qalam.onrender.com",
+    "FRONTEND_URL": "https://rad-truffle-6266c3.netlify.app",
+    "GITHUB_CLIENT_ID": "your_github_client_id",
+    "GITHUB_CLIENT_SECRET": "your_github_client_secret",
+    "GOOGLE_CLIENT_ID": "your_google_client_id",
+    "GOOGLE_CLIENT_SECRET": "your_google_client_secret",
+    "JWT_SECRET": "your_super_secret_jwt_key_here_make_it_long_and_random",
+    "NODE_ENV": "production",
+    "PORT": "3000"
+  },
+  "instructions": {
+    "aws_setup": {
+      "AWS_ACCESS_KEY_ID": "Get this from AWS IAM Console - Create a user with S3 and DynamoDB permissions",
+      "AWS_SECRET_ACCESS_KEY": "Get this from AWS IAM Console - Secret key for the user",
+      "AWS_REGION": "Your AWS region (us-east-1 is default)",
+      "AWS_S3_BUCKET": "Your S3 bucket name for file uploads",
+      "AWS_DYNAMODB_TABLE": "Your DynamoDB table name for user data"
+    },
+    "oauth_setup": {
+      "github": {
+        "steps": [
+          "Go to https://github.com/settings/developers",
+          "Click 'New OAuth App'",
+          "Application name: Qalam",
+          "Homepage URL: https://qalam.onrender.com",
+          "Authorization callback URL: https://qalam.onrender.com/auth/github/callback",
+          "Register and copy Client ID and Client Secret"
+        ]
+      },
+      "google": {
+        "steps": [
+          "Go to https://console.cloud.google.com/",
+          "Create a new project or select existing",
+          "Enable Google+ API",
+          "Go to Credentials → Create Credentials → OAuth 2.0 Client IDs",
+          "Set up OAuth consent screen",
+          "Add authorized redirect URIs: https://qalam.onrender.com/auth/google/callback",
+          "Copy Client ID and Client Secret"
+        ]
+      }
+    },
+    "jwt_secret": {
+      "description": "Generate a strong random string for JWT token signing",
+      "example": "Use a tool like https://generate-secret.vercel.app/32 or run: node -e \"console.log(require('crypto').randomBytes(32).toString('hex'))\""
+    },
+    "render_deployment": {
+      "steps": [
+        "Go to your Render dashboard",
+        "Select your Qalam backend service",
+        "Go to Environment tab",
+        "Add each variable from the environment_variables object above",
+        "Replace placeholder values with real credentials",
+        "Redeploy the service"
+      ]
+    }
+  },
+  "example_values": {
+    "AWS_ACCESS_KEY_ID": "AKIAIOSFODNN7EXAMPLE",
+    "AWS_SECRET_ACCESS_KEY": "wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY",
+    "AWS_REGION": "us-east-1",
+    "AWS_S3_BUCKET": "qalam-uploads-12345",
+    "AWS_DYNAMODB_TABLE": "qalam-users",
+    "BACKEND_URL": "https://qalam.onrender.com",
+    "FRONTEND_URL": "https://rad-truffle-6266c3.netlify.app",
+    "GITHUB_CLIENT_ID": "1234567890abcdef1234",
+    "GITHUB_CLIENT_SECRET": "abcdef1234567890abcdef1234567890abcdef12",
+    "GOOGLE_CLIENT_ID": "1234567890-abcdefghijklmnopqrstuvwxyz.apps.googleusercontent.com",
+    "GOOGLE_CLIENT_SECRET": "GOCSPX-abcdefghijklmnopqrstuvwxyz",
+    "JWT_SECRET": "a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6q7r8s9t0u1v2w3x4y5z6",
+    "NODE_ENV": "production",
+    "PORT": "3000"
+  }
+} 

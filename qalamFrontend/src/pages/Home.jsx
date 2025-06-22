@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import ActualPostCard from '../features/PostCard/ActualPostCard';
 import PageHeader from '../components/PageHeader';
+import { getBackendUrl } from '../utils/api.js';
 
 export default function Home() {
   const [posts, setPosts] = useState([]);
@@ -13,7 +14,8 @@ export default function Home() {
   const fetchAllPosts = async () => {
     try {
       setLoading(true);
-      const response = await fetch('http://localhost:3000/posts', {
+      const backendUrl = getBackendUrl();
+      const response = await fetch(`${backendUrl}/posts`, {
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('jwt_token')}`,
         },

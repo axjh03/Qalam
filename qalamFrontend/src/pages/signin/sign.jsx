@@ -90,8 +90,10 @@ export default function Sign({ onLoginSuccess }) {
     console.log('Username:', username);
     console.log('Password:', password);
     
+    const backendUrl = import.meta.env.VITE_API_URL || 'http://localhost:3000';
+    
     try {
-      const response = await fetch('http://localhost:3000/auth/login', {
+      const response = await fetch(`${backendUrl}/auth/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded',
@@ -145,6 +147,8 @@ export default function Sign({ onLoginSuccess }) {
     console.log('Full Name:', fullName);
     console.log('Password:', password);
     
+    const backendUrl = import.meta.env.VITE_API_URL || 'http://localhost:3000';
+    
     try {
       // First, upload image to S3 if selected
       let s3ImageUrl = '';
@@ -162,7 +166,7 @@ export default function Sign({ onLoginSuccess }) {
         formData.append('username', username);
         
         // Upload directly through backend
-        const uploadResponse = await fetch('http://localhost:3000/upload/signup', {
+        const uploadResponse = await fetch(`${backendUrl}/upload/signup`, {
           method: 'POST',
           body: formData,
         });
@@ -184,7 +188,7 @@ export default function Sign({ onLoginSuccess }) {
       }
 
       // Then create user account
-      const response = await fetch('http://localhost:3000/auth/signup', {
+      const response = await fetch(`${backendUrl}/auth/signup`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

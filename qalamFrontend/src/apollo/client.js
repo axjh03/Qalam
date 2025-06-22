@@ -1,11 +1,13 @@
 import { ApolloClient, InMemoryCache, createHttpLink, from } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
 import { onError } from '@apollo/client/link/error';
-import { API_ENDPOINTS } from '../config/api.js';
+
+// Get backend URL from environment variable
+const backendUrl = import.meta.env.VITE_API_URL || 'http://localhost:3000';
 
 // Create HTTP link
 const httpLink = createHttpLink({
-  uri: API_ENDPOINTS.GRAPHQL, // GraphQL endpoint
+  uri: `${backendUrl}/graphql`, // GraphQL endpoint
 });
 
 // Auth link to add JWT token to requests

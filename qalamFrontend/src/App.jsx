@@ -21,8 +21,9 @@ function App() {
 
   // Function to check backend health
   const checkBackendHealth = async () => {
+    const backendUrl = import.meta.env.VITE_API_URL || 'http://localhost:3000';
     try {
-      const response = await fetch(API_ENDPOINTS.HEALTH, {
+      const response = await fetch(`${backendUrl}/health`, {
         method: 'GET',
         signal: AbortSignal.timeout(3000), // 3 second timeout
       });
@@ -183,8 +184,10 @@ function App() {
   const handlePublishPost = async (postData) => {
     console.log('🎉 Publishing post...', postData);
     
+    const backendUrl = import.meta.env.VITE_API_URL || 'http://localhost:3000';
+    
     try {
-      const response = await fetch(API_ENDPOINTS.POSTS, {
+      const response = await fetch(`${backendUrl}/posts`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
