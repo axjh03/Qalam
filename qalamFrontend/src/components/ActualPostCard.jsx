@@ -1,5 +1,62 @@
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
+
+const ActualPostCard = ({ post, onPostClick }) => {
+  const navigate = useNavigate();
+
+  const formatDate = (dateString) => {
+    if (!dateString) return "Someday";
+    const date = new Date(dateString);
+    const now = new Date();
+    const diffTime = Math.abs(now - date);
+    const diffSeconds = Math.floor(diffTime / 1000);
+
+    if (diffSeconds < 60) return "just now";
+    const diffMinutes = Math.floor(diffSeconds / 60);
+    if (diffMinutes < 60) return `${diffMinutes}m ago`;
+    const diffHours = Math.floor(diffMinutes / 60);
+    if (diffHours < 24) return `${diffHours}h ago`;
+    const diffDays = Math.floor(diffHours / 24);
+    if (diffDays < 30) return `${diffDays}d ago`;
+    const diffMonths = Math.floor(diffDays / 30);
+    if (diffMonths < 12) return `${diffMonths}mo ago`;
+    const diffYears = Math.floor(diffDays / 365);
+    return `${diffYears}y ago`;
+  };
+
+  const renderFormattedContent = (content) => {
+    if (!content) return null;
+    try {
+      const parsed = JSON.parse(content);
+      return parsed.blocks.map((block) => {
+        if (block.type === "paragraph") {
+          return <p key={block.id} dangerouslySetInnerHTML={{ __html: block.data.text }} />;
+        }
+        return null;
+      });
+    } catch {
+      return <p>{content}</p>;
+    }
+  };
+
+  const handleReadMore = (e) => {
+    e.stopPropagation();
+    if (onPostClick) {
+      onPostClick(post);
+    }
+  };
+
+  const handleCardClick = () => {
+    if (onPostClick) {
+      onPostClick(post);
+    }
+  };
+
   return (
-    <div className="bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300 overflow-hidden">
+    <div 
+      className="bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300 overflow-hidden cursor-pointer"
+      onClick={handleCardClick}
+    >
       {/* Post Image */}
       {post.imageUrl && (
         <div className="relative h-48 sm:h-64 overflow-hidden">
@@ -58,7 +115,7 @@
 
           {/* Read More Button */}
           <button
-            onClick={() => handleReadMore(post)}
+            onClick={handleReadMore}
             className="text-blue-600 hover:text-blue-800 text-sm sm:text-base font-medium transition-colors"
           >
             Read More →
@@ -66,4 +123,7 @@
         </div>
       </div>
     </div>
-  ); 
+  );
+};
+
+export default ActualPostCard; 

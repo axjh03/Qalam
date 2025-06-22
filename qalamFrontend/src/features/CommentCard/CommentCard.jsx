@@ -43,6 +43,23 @@ export default function CommentCard({ comment, onDelete }) {
     }
   };
 
+  // Get current user ID from JWT token
+  const getCurrentUserId = () => {
+    try {
+      const token = localStorage.getItem('jwt_token');
+      if (token) {
+        const payload = JSON.parse(atob(token.split('.')[1]));
+        return payload.sub; // This is the userId from the JWT payload
+      }
+    } catch (error) {
+      console.error('Error parsing JWT token:', error);
+    }
+    return null;
+  };
+
+  const currentUserId = getCurrentUserId();
+  const isCommentAuthor = currentUserId === comment?.authorId;
+
   if (!comment) return null;
 
   return (
@@ -72,7 +89,7 @@ export default function CommentCard({ comment, onDelete }) {
                 <span className="text-xs text-gray-500">@{comment.authorUsername}</span>
                 <span className="text-xs text-gray-500">{formatDate(comment.createdAt)}</span>
               </div>
-              {onDelete && (
+              {isCommentAuthor && onDelete && (
                 <button
                   onClick={handleDelete}
                   className="text-gray-400 hover:text-red-500 transition-colors p-1 rounded-full"

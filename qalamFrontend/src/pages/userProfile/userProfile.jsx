@@ -1,3 +1,64 @@
+import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import ActualPostCard from '../../components/ActualPostCard';
+import PostModal from '../../modals/PostModal';
+import { getBackendUrl } from '../../utils/api.js';
+
+export default function UserProfile() {
+  const { username } = useParams();
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [selectedPost, setSelectedPost] = useState(null);
+  const [isPostModalOpen, setIsPostModalOpen] = useState(false);
+
+  useEffect(() => {
+    if (username) {
+      fetchUserProfile();
+    }
+  }, [username]);
+
+  const fetchUserProfile = async () => {
+    try {
+      setLoading(true);
+      const cleanUsername = username.replace('@', '');
+      const backendUrl = getBackendUrl();
+      const response = await fetch(`${backendUrl}/users/profile/${cleanUsername}`, {
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('jwt_token')}`,
+        },
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        setUser(data.user);
+      } else {
+        console.error('Failed to fetch user profile');
+        setUser(null);
+      }
+    } catch (error) {
+      console.error('Error fetching user profile:', error);
+      setUser(null);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handlePostClick = (post) => {
+    setSelectedPost(post);
+    setIsPostModalOpen(true);
+  };
+
+  const handleClosePostModal = () => {
+    setIsPostModalOpen(false);
+    setSelectedPost(null);
+  };
+
+  const refreshUserData = () => {
+    // This function can be used to refresh user data if needed
+    // For now, we'll just refetch the user profile to update counts
+    fetchUserProfile();
+  };
+
   return (
     <div className="space-y-4 sm:space-y-6">
       {/* Profile Header */}
@@ -42,7 +103,11 @@
         {/* Posts Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
           {user?.posts?.map((post) => (
-            <ActualPostCard key={post.id} post={post} />
+            <ActualPostCard 
+              key={post.postId} 
+              post={post} 
+              onPostClick={handlePostClick}
+            />
           ))}
         </div>
 
@@ -68,5 +133,16 @@
           </div>
         )}
       </div>
+
+      {/* Post Modal */}
+      {isPostModalOpen && selectedPost && (
+        <PostModal
+          post={selectedPost}
+          isOpen={isPostModalOpen}
+          onClose={handleClosePostModal}
+          refreshUserData={refreshUserData}
+        />
+      )}
     </div>
-  ); 
+  );
+} 

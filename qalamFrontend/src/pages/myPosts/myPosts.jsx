@@ -1,3 +1,85 @@
+import React, { useState, useEffect } from 'react';
+import ActualPostCard from '../../components/ActualPostCard';
+import PostModal from '../../modals/PostModal';
+import { getBackendUrl } from '../../utils/api.js';
+
+export default function MyPosts() {
+  const [posts, setPosts] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [selectedPost, setSelectedPost] = useState(null);
+  const [isPostModalOpen, setIsPostModalOpen] = useState(false);
+
+  useEffect(() => {
+    fetchMyPosts();
+  }, []);
+
+  const fetchMyPosts = async () => {
+    try {
+      setLoading(true);
+      const backendUrl = getBackendUrl();
+      const response = await fetch(`${backendUrl}/posts/my-posts`, {
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('jwt_token')}`,
+        },
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        setPosts(data.posts || []);
+      } else {
+        console.error('Failed to fetch my posts');
+        setPosts([]);
+      }
+    } catch (error) {
+      console.error('Error fetching my posts:', error);
+      setPosts([]);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleDeletePost = async (postId) => {
+    if (!window.confirm('Are you sure you want to delete this post?')) {
+      return;
+    }
+
+    try {
+      const backendUrl = getBackendUrl();
+      const response = await fetch(`${backendUrl}/posts/${postId}`, {
+        method: 'DELETE',
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('jwt_token')}`,
+        },
+      });
+
+      if (response.ok) {
+        setPosts(posts.filter(p => p.postId !== postId));
+        alert('Post deleted successfully');
+      } else {
+        alert('Failed to delete post');
+      }
+    } catch (error) {
+      console.error('Error deleting post:', error);
+      alert('An error occurred while deleting the post.');
+    }
+  };
+
+  const handlePostClick = (post) => {
+    setSelectedPost(post);
+    setIsPostModalOpen(true);
+  };
+
+  const handleClosePostModal = () => {
+    setIsPostModalOpen(false);
+    setSelectedPost(null);
+  };
+
+  const refreshUserData = () => {
+    // This function can be used to refresh user data if needed
+    // For now, we'll just refetch posts to update like counts
+    fetchMyPosts();
+  };
+
   return (
     <div className="space-y-4 sm:space-y-6">
       {/* Header */}
@@ -13,7 +95,11 @@
       {/* Posts Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
         {posts.map((post) => (
-          <ActualPostCard key={post.id} post={post} />
+          <ActualPostCard 
+            key={post.postId} 
+            post={post} 
+            onPostClick={handlePostClick}
+          />
         ))}
       </div>
 
@@ -36,5 +122,16 @@
           <p className="text-sm sm:text-base text-gray-500">Start writing your first post!</p>
         </div>
       )}
+
+      {/* Post Modal */}
+      {isPostModalOpen && selectedPost && (
+        <PostModal
+          post={selectedPost}
+          isOpen={isPostModalOpen}
+          onClose={handleClosePostModal}
+          refreshUserData={refreshUserData}
+        />
+      )}
     </div>
-  ); 
+  );
+} 
