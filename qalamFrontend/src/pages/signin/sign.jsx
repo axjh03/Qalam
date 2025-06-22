@@ -1,6 +1,6 @@
 import React, { useState, useRef } from "react";
 import ImageCropper from "../../ui/ImageCropper";
-import { config } from "../config/environment.js";
+import { config } from "../../config/environment.js";
 
 export default function Sign({ onLoginSuccess }) {
   const [showPassword, setShowPassword] = useState(false);
@@ -246,44 +246,44 @@ export default function Sign({ onLoginSuccess }) {
   return (
     <div className="min-h-screen flex flex-col items-center justify-center relative bg-gradient-to-br from-slate-50 to-white">
       {/* Header Section */}
-      <div className="text-center mb-12 px-4">
-        <h1 className="text-8xl md:text-9xl lg:text-[12rem] font-black bg-gradient-to-r from-purple-600 via-pink-500 to-indigo-600 bg-clip-text text-transparent animate-gradient-x mb-4 leading-none" style={{
+      <div className="text-center mb-8 px-4">
+        <h1 className="text-6xl md:text-7xl lg:text-8xl font-black bg-gradient-to-r from-purple-600 via-pink-500 to-indigo-600 bg-clip-text text-transparent animate-gradient-x mb-3 leading-none" style={{
           fontFamily: "'Dancing Script', cursive, serif",
           backgroundSize: '200% 200%',
           animation: 'gradientFlow 3s ease-in-out infinite'
         }}>
           Qalam
         </h1>
-        <p className="text-xl md:text-2xl font-light text-slate-600 max-w-2xl mx-auto">
+        <p className="text-lg md:text-xl font-light text-slate-600 max-w-2xl mx-auto">
           Place where your writing matters
         </p>
       </div>
 
       {/* Main Content - Wide Screen Layout */}
-      <div className="w-full max-w-6xl px-4">
-        <div className="flex flex-col lg:flex-row items-center justify-center gap-8 lg:gap-16">
+      <div className="w-full max-w-5xl px-4">
+        <div className="flex flex-col lg:flex-row items-center justify-center gap-6 lg:gap-12">
           
           {/* Left Side - Social Buttons */}
-          <div className="flex flex-col space-y-4 w-full max-w-sm lg:max-w-xs">
+          <div className="flex flex-col space-y-3 w-full max-w-sm lg:max-w-xs">
             <button
-              class="rounded-md flex items-center justify-center border border-slate-300 py-3 px-6 text-center text-sm transition-all shadow-sm hover:shadow-lg text-slate-600 hover:text-white hover:bg-slate-800 hover:border-slate-800 focus:text-white focus:bg-slate-800 focus:border-slate-800 active:border-slate-800 active:text-white active:bg-slate-800 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+              class="rounded-md flex items-center justify-center border border-slate-300 py-2.5 px-5 text-center text-sm transition-all shadow-sm hover:shadow-lg text-slate-600 hover:text-white hover:bg-slate-800 hover:border-slate-800 focus:text-white focus:bg-slate-800 focus:border-slate-800 active:border-slate-800 active:text-white active:bg-slate-800 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
               type="button"
               onClick={handleGoogleLogin}
             >
               <img
                 src="https://docs.material-tailwind.com/icons/google.svg"
                 alt="google"
-                class="h-5 w-5 mr-3"
+                class="h-4 w-4 mr-2"
               />
               Continue with Google
             </button>
             
             <button
-              class="rounded-md flex items-center justify-center border border-slate-300 py-3 px-6 text-center text-sm transition-all shadow-sm hover:shadow-lg text-slate-600 hover:text-white hover:bg-slate-800 hover:border-slate-800 focus:text-white focus:bg-slate-800 focus:border-slate-800 active:border-slate-800 active:text-white active:bg-slate-800 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+              class="rounded-md flex items-center justify-center border border-slate-300 py-2.5 px-5 text-center text-sm transition-all shadow-sm hover:shadow-lg text-slate-600 hover:text-white hover:bg-slate-800 hover:border-slate-800 focus:text-white focus:bg-slate-800 focus:border-slate-800 active:border-slate-800 active:text-white active:bg-slate-800 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
               type="button"
               onClick={handleGitHubLogin}
             >
-              <svg className="h-5 w-5 mr-3" fill="currentColor" viewBox="0 0 24 24">
+              <svg className="h-4 w-4 mr-2" fill="currentColor" viewBox="0 0 24 24">
                 <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.237 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
               </svg>
               Continue with GitHub
@@ -292,18 +292,18 @@ export default function Sign({ onLoginSuccess }) {
 
           {/* Divider */}
           <div className="hidden lg:flex flex-col items-center">
-            <div className="w-px h-32 bg-slate-300"></div>
-            <span className="text-4xl font-bold text-slate-400 my-4">|</span>
-            <div className="w-px h-32 bg-slate-300"></div>
+            <div className="w-px h-24 bg-slate-300"></div>
+            <span className="text-3xl font-bold text-slate-400 my-3">|</span>
+            <div className="w-px h-24 bg-slate-300"></div>
           </div>
 
           {/* Right Side - Form */}
-          <div className="flex flex-col space-y-4 w-full max-w-sm lg:max-w-xs">
+          <div className="flex flex-col space-y-3 w-full max-w-sm lg:max-w-xs">
             {/* Profile Picture - Top of Form (only in sign up mode) */}
             {isSignUp && (
-              <div className="text-center mb-4">
+              <div className="text-center mb-3">
                 <div className="relative inline-block">
-                  <div className="w-24 h-24 rounded-full bg-slate-200 flex items-center justify-center overflow-hidden border-4 border-slate-300 shadow-lg">
+                  <div className="w-20 h-20 rounded-full bg-slate-200 flex items-center justify-center overflow-hidden border-4 border-slate-300 shadow-lg">
                     {selectedImage ? (
                       <img 
                         src={selectedImage} 
@@ -311,7 +311,7 @@ export default function Sign({ onLoginSuccess }) {
                         className="w-full h-full object-cover"
                       />
                     ) : (
-                      <svg className="w-12 h-12 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <svg className="w-10 h-10 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                       </svg>
                     )}
@@ -326,9 +326,9 @@ export default function Sign({ onLoginSuccess }) {
                   />
                   <label
                     htmlFor="image-upload"
-                    className="absolute -bottom-2 -right-2 bg-slate-800 text-white rounded-full p-2 cursor-pointer hover:bg-slate-700 transition-colors shadow-lg"
+                    className="absolute -bottom-1 -right-1 bg-slate-800 text-white rounded-full p-1.5 cursor-pointer hover:bg-slate-700 transition-colors shadow-lg"
                   >
-                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
                     </svg>
                   </label>
@@ -398,11 +398,11 @@ export default function Sign({ onLoginSuccess }) {
               
               {/* Password Validation Display */}
               {isSignUp && password && (
-                <div className="mt-2 p-3 bg-slate-50 rounded-md">
-                  <p className="text-xs font-medium text-slate-700 mb-2">Password Requirements:</p>
-                  <div className="space-y-1">
+                <div className="mt-2 p-2 bg-slate-50 rounded-md">
+                  <p className="text-xs font-medium text-slate-700 mb-1">Password Requirements:</p>
+                  <div className="space-y-0.5">
                     <div className={`flex items-center text-xs ${passwordValidation.length ? 'text-green-600' : 'text-red-500'}`}>
-                      <svg className={`w-3 h-3 mr-2 ${passwordValidation.length ? 'text-green-600' : 'text-red-500'}`} fill="currentColor" viewBox="0 0 20 20">
+                      <svg className={`w-3 h-3 mr-1.5 ${passwordValidation.length ? 'text-green-600' : 'text-red-500'}`} fill="currentColor" viewBox="0 0 20 20">
                         {passwordValidation.length ? (
                           <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                         ) : (
@@ -412,7 +412,7 @@ export default function Sign({ onLoginSuccess }) {
                       At least 8 characters
                     </div>
                     <div className={`flex items-center text-xs ${passwordValidation.lowercase ? 'text-green-600' : 'text-red-500'}`}>
-                      <svg className={`w-3 h-3 mr-2 ${passwordValidation.lowercase ? 'text-green-600' : 'text-red-500'}`} fill="currentColor" viewBox="0 0 20 20">
+                      <svg className={`w-3 h-3 mr-1.5 ${passwordValidation.lowercase ? 'text-green-600' : 'text-red-500'}`} fill="currentColor" viewBox="0 0 20 20">
                         {passwordValidation.lowercase ? (
                           <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                         ) : (
@@ -422,7 +422,7 @@ export default function Sign({ onLoginSuccess }) {
                       One lowercase letter
                     </div>
                     <div className={`flex items-center text-xs ${passwordValidation.uppercase ? 'text-green-600' : 'text-red-500'}`}>
-                      <svg className={`w-3 h-3 mr-2 ${passwordValidation.uppercase ? 'text-green-600' : 'text-red-500'}`} fill="currentColor" viewBox="0 0 20 20">
+                      <svg className={`w-3 h-3 mr-1.5 ${passwordValidation.uppercase ? 'text-green-600' : 'text-red-500'}`} fill="currentColor" viewBox="0 0 20 20">
                         {passwordValidation.uppercase ? (
                           <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                         ) : (
@@ -432,7 +432,7 @@ export default function Sign({ onLoginSuccess }) {
                       One uppercase letter
                     </div>
                     <div className={`flex items-center text-xs ${passwordValidation.symbol ? 'text-green-600' : 'text-red-500'}`}>
-                      <svg className={`w-3 h-3 mr-2 ${passwordValidation.symbol ? 'text-green-600' : 'text-red-500'}`} fill="currentColor" viewBox="0 0 20 20">
+                      <svg className={`w-3 h-3 mr-1.5 ${passwordValidation.symbol ? 'text-green-600' : 'text-red-500'}`} fill="currentColor" viewBox="0 0 20 20">
                         {passwordValidation.symbol ? (
                           <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                         ) : (
@@ -488,7 +488,7 @@ export default function Sign({ onLoginSuccess }) {
             <div className="flex space-x-2 w-full">
               <button
                 data-ripple-light="true"
-                class={`flex-1 rounded-md py-2 px-4 border text-center text-sm transition-all shadow-md hover:shadow-lg disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none ${
+                class={`flex-1 rounded-md py-2 px-3 border text-center text-sm transition-all shadow-md hover:shadow-lg disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none ${
                   isSignUp 
                     ? 'bg-gradient-to-tr from-slate-800 to-slate-700 border-transparent text-white hover:bg-slate-700 focus:bg-slate-700 active:bg-slate-700' 
                     : 'border-slate-300 text-slate-600 hover:text-white hover:bg-slate-800 hover:border-slate-800 focus:text-white focus:bg-slate-800 focus:border-slate-800 active:border-slate-800 active:text-white active:bg-slate-800'
@@ -500,7 +500,7 @@ export default function Sign({ onLoginSuccess }) {
                 Sign Up
               </button>
               <button
-                class={`flex-1 rounded-md border py-2 px-4 text-center text-sm transition-all shadow-sm hover:shadow-lg disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none ${
+                class={`flex-1 rounded-md border py-2 px-3 text-center text-sm transition-all shadow-sm hover:shadow-lg disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none ${
                   !isSignUp 
                     ? 'bg-gradient-to-tr from-slate-800 to-slate-700 border-transparent text-white hover:bg-slate-700 focus:bg-slate-700 active:bg-slate-700' 
                     : 'border-slate-300 text-slate-600 hover:text-white hover:bg-slate-800 hover:border-slate-800 focus:text-white focus:bg-slate-800 focus:border-slate-800 active:border-slate-800 active:text-white active:bg-slate-800'
