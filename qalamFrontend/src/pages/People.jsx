@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import FriendSuggestCard from '../features/SuggestFriendCard/FriendSuggestCard';
 import LoadMore from '../ui/LoadMore/LoadMore';
 import PageHeader from '../components/PageHeader';
+import { getBackendUrl } from '../utils/api.js';
 
 const People = () => {
   const [users, setUsers] = useState([]);
@@ -25,9 +26,10 @@ const People = () => {
   }, [users]);
 
   const fetchUsers = async () => {
-    setLoading(true);
     try {
-      const response = await fetch('http://localhost:3000/users', {
+      setLoading(true);
+      const backendUrl = getBackendUrl();
+      const response = await fetch(`${backendUrl}/users`, {
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('jwt_token')}`,
         },

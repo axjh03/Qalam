@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { getBackendUrl } from '../../utils/api.js';
 
 export default function FriendSuggestCard({ user, onClose, refreshUserData }) {
   const navigate = useNavigate();
   const [isFriend, setIsFriend] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [isChecking, setIsChecking] = useState(true);
   
   const getInitials = (name) => {
     if (!name) return 'U';
@@ -13,15 +15,16 @@ export default function FriendSuggestCard({ user, onClose, refreshUserData }) {
 
   // Check friendship status on component mount
   useEffect(() => {
-    checkFriendshipStatus();
+    checkFriendStatus();
   }, [user?.userId]);
 
-  const checkFriendshipStatus = async () => {
+  const checkFriendStatus = async () => {
     if (!user?.userId) return;
     
     try {
-      // Check if current user is following the displayed user
-      const response = await fetch(`http://localhost:3000/users/friends/check/${user.userId}`, {
+      setIsChecking(true);
+      const backendUrl = getBackendUrl();
+      const response = await fetch(`${backendUrl}/users/friends/check/${user.userId}`, {
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('jwt_token')}`,
         },
@@ -32,7 +35,9 @@ export default function FriendSuggestCard({ user, onClose, refreshUserData }) {
         setIsFriend(data.isFriend);
       }
     } catch (error) {
-      console.error('Error checking follow status:', error);
+      console.error('Error checking friend status:', error);
+    } finally {
+      setIsChecking(false);
     }
   };
 
@@ -41,7 +46,8 @@ export default function FriendSuggestCard({ user, onClose, refreshUserData }) {
     
     setIsLoading(true);
     try {
-      const response = await fetch(`http://localhost:3000/users/friends/add/${user.userId}`, {
+      const backendUrl = getBackendUrl();
+      const response = await fetch(`${backendUrl}/users/friends/add/${user.userId}`, {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('jwt_token')}`,
@@ -55,7 +61,7 @@ export default function FriendSuggestCard({ user, onClose, refreshUserData }) {
         }
       }
     } catch (error) {
-      console.error('Error following user:', error);
+      console.error('Error adding friend:', error);
     } finally {
       setIsLoading(false);
     }
@@ -66,7 +72,8 @@ export default function FriendSuggestCard({ user, onClose, refreshUserData }) {
     
     setIsLoading(true);
     try {
-      const response = await fetch(`http://localhost:3000/users/friends/remove/${user.userId}`, {
+      const backendUrl = getBackendUrl();
+      const response = await fetch(`${backendUrl}/users/friends/remove/${user.userId}`, {
         method: 'DELETE',
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('jwt_token')}`,
@@ -80,7 +87,7 @@ export default function FriendSuggestCard({ user, onClose, refreshUserData }) {
         }
       }
     } catch (error) {
-      console.error('Error unfollowing user:', error);
+      console.error('Error removing friend:', error);
     } finally {
       setIsLoading(false);
     }

@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 import FriendSuggestCard from "../SuggestFriendCard/FriendSuggestCard"
 import LoadMore from "../../ui/LoadMore/LoadMore"
+import { getBackendUrl } from '../../utils/api.js'
 
 export default function ProfileCard({ user, refreshUserData }) {
   const navigate = useNavigate();
@@ -62,7 +63,8 @@ export default function ProfileCard({ user, refreshUserData }) {
   const fetchRandomPeople = async () => {
     try {
       setLoadingPeople(true);
-      const response = await fetch('http://localhost:3000/users', {
+      const backendUrl = getBackendUrl();
+      const response = await fetch(`${backendUrl}/users`, {
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('jwt_token')}`,
         },
@@ -90,7 +92,8 @@ export default function ProfileCard({ user, refreshUserData }) {
     
     try {
       setLoadingPosts(true);
-      const response = await fetch(`http://localhost:3000/posts/${user.userId}/posts`, {
+      const backendUrl = getBackendUrl();
+      const response = await fetch(`${backendUrl}/posts/${user.userId}/posts`, {
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('jwt_token')}`,
         },
@@ -110,12 +113,12 @@ export default function ProfileCard({ user, refreshUserData }) {
 
   // Fetch user friends
   const fetchUserFriends = async () => {
-    if (!user?.userId) return;
+    if (!user?.username) return;
     
     try {
       setLoadingFriends(true);
-      // Get friends of the profile being viewed (not current user)
-      const response = await fetch(`http://localhost:3000/users/profile/${user.username}/friends`, {
+      const backendUrl = getBackendUrl();
+      const response = await fetch(`${backendUrl}/users/profile/${user.username}/friends`, {
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('jwt_token')}`,
         },

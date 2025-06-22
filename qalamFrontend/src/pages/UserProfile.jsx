@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import ProfileCard from '../features/ProfileCard/ProfileCard';
+import { getBackendUrl } from '../utils/api.js';
 
 export default function UserProfile() {
   const { username } = useParams();
@@ -21,11 +22,11 @@ export default function UserProfile() {
       setLoading(true);
       setError(null);
       
-      // Username is now passed directly without @ symbol
-      const cleanUsername = username;
+      const cleanUsername = username.replace('@', '');
       console.log('Clean username:', cleanUsername);
       
-      const response = await fetch(`http://localhost:3000/users/profile/${cleanUsername}`, {
+      const backendUrl = getBackendUrl();
+      const response = await fetch(`${backendUrl}/users/profile/${cleanUsername}`, {
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('jwt_token')}`,
         },
