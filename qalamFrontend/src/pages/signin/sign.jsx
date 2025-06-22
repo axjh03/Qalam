@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import ImageCropper from "../../ui/ImageCropper";
+import { config } from "../config/environment.js";
 
 export default function Sign({ onLoginSuccess }) {
   const [showPassword, setShowPassword] = useState(false);
@@ -19,6 +20,7 @@ export default function Sign({ onLoginSuccess }) {
     uppercase: false,
     symbol: false
   });
+  const fileInputRef = useRef(null);
 
   const handleImageChange = (event) => {
     const file = event.target.files[0];
@@ -90,7 +92,7 @@ export default function Sign({ onLoginSuccess }) {
     console.log('Username:', username);
     console.log('Password:', password);
     
-    const backendUrl = import.meta.env.VITE_API_URL || 'http://localhost:3000';
+    const backendUrl = config.getBackendUrl();
     
     try {
       const response = await fetch(`${backendUrl}/auth/login`, {
@@ -147,7 +149,7 @@ export default function Sign({ onLoginSuccess }) {
     console.log('Full Name:', fullName);
     console.log('Password:', password);
     
-    const backendUrl = import.meta.env.VITE_API_URL || 'http://localhost:3000';
+    const backendUrl = config.getBackendUrl();
     
     try {
       // First, upload image to S3 if selected
@@ -232,12 +234,12 @@ export default function Sign({ onLoginSuccess }) {
   };
 
   const handleGoogleLogin = () => {
-    const backendUrl = import.meta.env.VITE_API_URL || 'http://localhost:3000';
+    const backendUrl = config.getBackendUrl();
     window.location.href = `${backendUrl}/auth/google`;
   };
 
   const handleGitHubLogin = () => {
-    const backendUrl = import.meta.env.VITE_API_URL || 'http://localhost:3000';
+    const backendUrl = config.getBackendUrl();
     window.location.href = `${backendUrl}/auth/github`;
   };
 
@@ -320,6 +322,7 @@ export default function Sign({ onLoginSuccess }) {
                     onChange={handleImageChange}
                     className="hidden"
                     id="image-upload"
+                    ref={fileInputRef}
                   />
                   <label
                     htmlFor="image-upload"

@@ -8,6 +8,7 @@ import MyPosts from './pages/MyPosts'
 import People from './pages/People'
 import UserProfile from './pages/UserProfile'
 import { API_ENDPOINTS } from './config/api.js'
+import { config } from './config/environment.js'
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
@@ -21,7 +22,7 @@ function App() {
 
   // Function to check backend health
   const checkBackendHealth = async () => {
-    const backendUrl = import.meta.env.VITE_API_URL || 'http://localhost:3000';
+    const backendUrl = config.getBackendUrl();
     try {
       const response = await fetch(`${backendUrl}/health`, {
         method: 'GET',
@@ -184,7 +185,7 @@ function App() {
   const handlePublishPost = async (postData) => {
     console.log('🎉 Publishing post...', postData);
     
-    const backendUrl = import.meta.env.VITE_API_URL || 'http://localhost:3000';
+    const backendUrl = config.getBackendUrl();
     
     try {
       const response = await fetch(`${backendUrl}/posts`, {

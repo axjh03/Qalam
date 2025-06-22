@@ -1,6 +1,8 @@
+import { config } from '../config/environment.js';
+
 // Utility function to get the backend URL
 export const getBackendUrl = () => {
-  return import.meta.env.VITE_API_URL || 'http://localhost:3000';
+  return config.getBackendUrl();
 };
 
 // Helper function to make API calls
