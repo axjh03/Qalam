@@ -3,6 +3,7 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
 import ImageCropper from '../ui/ImageCropper'
+import { getBackendUrl } from '../utils/api.js'
 
 export default function Navbar({ user, onLogout, onPlusClick }) {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false)
@@ -13,17 +14,19 @@ export default function Navbar({ user, onLogout, onPlusClick }) {
   const fileInputRef = useRef(null)
   const navigate = useNavigate()
   const location = useLocation()
+  const [isUploading, setIsUploading] = useState(false)
 
   // Fetch fresh profile picture URL on component mount
   useEffect(() => {
     if (user?.profilePictureKey) {
-      fetchProfilePictureUrl();
+      fetchProfilePicture();
     }
   }, [user?.profilePictureKey]);
 
-  const fetchProfilePictureUrl = async () => {
+  const fetchProfilePicture = async () => {
     try {
-      const response = await fetch('http://localhost:3000/profile-picture-url', {
+      const backendUrl = getBackendUrl();
+      const response = await fetch(`${backendUrl}/profile-picture-url`, {
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('jwt_token')}`,
         },
@@ -31,10 +34,12 @@ export default function Navbar({ user, onLogout, onPlusClick }) {
 
       if (response.ok) {
         const data = await response.json();
-        setProfilePictureUrl(data.profilePictureUrl);
+        if (data.profilePictureUrl) {
+          setProfilePictureUrl(data.profilePictureUrl);
+        }
       }
     } catch (error) {
-      console.error('Error fetching profile picture URL:', error);
+      console.error('Error fetching profile picture:', error);
     }
   };
 
@@ -77,7 +82,8 @@ export default function Navbar({ user, onLogout, onPlusClick }) {
       formData.append('username', user.username);
 
       // Upload to backend
-      const uploadResponse = await fetch('http://localhost:3000/upload/direct', {
+      const backendUrl = getBackendUrl();
+      const uploadResponse = await fetch(`${backendUrl}/upload/direct`, {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('jwt_token')}`,
@@ -89,7 +95,7 @@ export default function Navbar({ user, onLogout, onPlusClick }) {
         const data = await uploadResponse.json();
         
         // Update user profile with new avatar
-        const updateResponse = await fetch('http://localhost:3000/users/profile/avatar', {
+        const updateResponse = await fetch(`${backendUrl}/users/profile/avatar`, {
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json',
@@ -102,7 +108,7 @@ export default function Navbar({ user, onLogout, onPlusClick }) {
 
         if (updateResponse.ok) {
           // Refresh profile picture
-          fetchProfilePictureUrl();
+          fetchProfilePicture();
           alert('Profile picture updated successfully!');
         } else {
           alert('Failed to update profile picture');
@@ -124,27 +130,73 @@ export default function Navbar({ user, onLogout, onPlusClick }) {
     setTempImage(null);
   };
 
-  const handleDeleteAccount = async () => {
+  const handleProfilePictureChange = async (event) => {
+    const file = event.target.files[0];
+    if (!file) return;
+
     try {
-      const response = await fetch('http://localhost:3000/users/delete', {
-        method: 'DELETE',
+      setIsUploading(true);
+      
+      // Upload the file
+      const backendUrl = getBackendUrl();
+      const uploadResponse = await fetch(`${backendUrl}/upload/direct`, {
+        method: 'POST',
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('jwt_token')}`,
         },
+        body: (() => {
+          const formData = new FormData();
+          formData.append('file', file);
+          formData.append('username', user.username);
+          return formData;
+        })(),
       });
 
-      if (response.ok) {
-        alert('Account deleted successfully');
-        onLogout();
-        navigate('/signin');
-      } else {
-        alert('Failed to delete account');
+      if (uploadResponse.ok) {
+        const uploadData = await uploadResponse.json();
+        
+        // Update user profile with new avatar URL
+        const updateResponse = await fetch(`${backendUrl}/users/profile/avatar`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${localStorage.getItem('jwt_token')}`,
+          },
+          body: JSON.stringify({
+            avatarUrl: uploadData.fileKey,
+          }),
+        });
+
+        if (updateResponse.ok) {
+          setProfilePictureUrl(uploadData.publicUrl);
+          // Update localStorage
+          localStorage.setItem('user_profile_picture_key', uploadData.fileKey);
+        }
       }
     } catch (error) {
-      console.error('Error deleting account:', error);
-      alert('Error deleting account');
+      console.error('Error updating profile picture:', error);
     } finally {
-      setShowDeleteConfirm(false);
+      setIsUploading(false);
+    }
+  };
+
+  const handleDeleteAccount = async () => {
+    if (window.confirm('Are you sure you want to delete your account? This action cannot be undone.')) {
+      try {
+        const backendUrl = getBackendUrl();
+        const response = await fetch(`${backendUrl}/users/delete`, {
+          method: 'DELETE',
+          headers: {
+            'Authorization': `Bearer ${localStorage.getItem('jwt_token')}`,
+          },
+        });
+
+        if (response.ok) {
+          onLogout();
+        }
+      } catch (error) {
+        console.error('Error deleting account:', error);
+      }
     }
   };
 
@@ -285,7 +337,7 @@ export default function Navbar({ user, onLogout, onPlusClick }) {
                   <input
                     type="file"
                     ref={fileInputRef}
-                    onChange={handleFileChange}
+                    onChange={handleProfilePictureChange}
                     accept="image/*"
                     className="hidden"
                   />

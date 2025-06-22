@@ -1,4 +1,5 @@
 import React, { useState, useRef } from 'react';
+import { getBackendUrl } from '../utils/api.js';
 
 export default function CreatePostModal({ isOpen, onClose, onPublish, user }) {
   const [title, setTitle] = useState('');
@@ -69,7 +70,8 @@ export default function CreatePostModal({ isOpen, onClose, onPublish, user }) {
   const uploadImageToS3 = async (file) => {
     try {
       // First, get the upload URL from backend
-      const response = await fetch('http://localhost:3000/upload/direct', {
+      const backendUrl = getBackendUrl();
+      const response = await fetch(`${backendUrl}/upload/direct`, {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('jwt_token')}`,
